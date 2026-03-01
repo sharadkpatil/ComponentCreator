@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { MessageList } from "./MessageList";
 import { MessageInput } from "./MessageInput";
+import { EmptyState } from "./EmptyState";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChat } from "@/lib/contexts/chat-context";
 
@@ -23,13 +24,19 @@ export function ChatInterface() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full p-4 overflow-hidden">
-      <ScrollArea ref={scrollAreaRef} className="flex-1 overflow-hidden">
-        <div className="pr-4">
-          <MessageList messages={messages} isLoading={status === "streaming"} />
+    <div className="flex flex-col h-full overflow-hidden">
+      {messages.length === 0 ? (
+        <div className="flex-1 flex items-center justify-center p-4">
+          <EmptyState />
         </div>
-      </ScrollArea>
-      <div className="mt-4 flex-shrink-0">
+      ) : (
+        <ScrollArea ref={scrollAreaRef} className="flex-1 overflow-hidden">
+          <div className="px-4">
+            <MessageList messages={messages} isLoading={status === "streaming"} />
+          </div>
+        </ScrollArea>
+      )}
+      <div className="flex-shrink-0">
         <MessageInput
           input={input}
           handleInputChange={handleInputChange}

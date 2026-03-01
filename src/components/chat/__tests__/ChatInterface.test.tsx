@@ -43,6 +43,10 @@ vi.mock("../MessageInput", () => ({
   ),
 }));
 
+vi.mock("../EmptyState", () => ({
+  EmptyState: () => <div data-testid="empty-state">Empty state</div>,
+}));
+
 const mockUseChat = {
   messages: [],
   input: "",
@@ -63,7 +67,8 @@ afterEach(() => {
 test("renders chat interface with message list and input", () => {
   render(<ChatInterface />);
 
-  expect(screen.getByTestId("message-list")).toBeDefined();
+  // With no messages, EmptyState is shown instead of MessageList
+  expect(screen.getByTestId("empty-state")).toBeDefined();
   expect(screen.getByTestId("message-input")).toBeDefined();
 });
 
@@ -138,13 +143,6 @@ test("isLoading is false when status is idle", () => {
 
 
 test("scrolls when messages change", () => {
-  const { rerender } = render(<ChatInterface />);
-
-  // Get initial scroll container
-  const scrollContainer = screen.getByTestId("message-list").closest("[data-radix-scroll-area-viewport]");
-  expect(scrollContainer).toBeDefined();
-
-  // Update messages - this should trigger the useEffect
   (useChat as any).mockReturnValue({
     ...mockUseChat,
     messages: [
@@ -153,11 +151,25 @@ test("scrolls when messages change", () => {
     ],
   });
 
+  const { rerender } = render(<ChatInterface />);
+
+  // With messages, ScrollArea and MessageList are rendered
+  const scrollContainer = screen.getByTestId("message-list").closest("[data-radix-scroll-area-viewport]");
+  expect(scrollContainer).toBeDefined();
+
+  (useChat as any).mockReturnValue({
+    ...mockUseChat,
+    messages: [
+      { id: "1", role: "user", content: "Hello" },
+      { id: "2", role: "assistant", content: "Hi there!" },
+      { id: "3", role: "user", content: "More" },
+    ],
+  });
+
   rerender(<ChatInterface />);
 
-  // Verify component re-rendered with new messages
   const messageList = screen.getByTestId("message-list");
-  expect(messageList.textContent).toContain("2 messages");
+  expect(messageList.textContent).toContain("3 messages");
 });
 
 test("renders with correct layout classes", () => {
@@ -167,13 +179,8 @@ test("renders with correct layout classes", () => {
   expect(mainDiv.className).toContain("flex");
   expect(mainDiv.className).toContain("flex-col");
   expect(mainDiv.className).toContain("h-full");
-  expect(mainDiv.className).toContain("p-4");
   expect(mainDiv.className).toContain("overflow-hidden");
 
-  const scrollArea = screen.getByTestId("message-list").closest(".flex-1");
-  expect(scrollArea?.className).toContain("overflow-hidden");
-
   const inputWrapper = screen.getByTestId("message-input").parentElement;
-  expect(inputWrapper?.className).toContain("mt-4");
   expect(inputWrapper?.className).toContain("flex-shrink-0");
 });

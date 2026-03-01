@@ -224,7 +224,7 @@ test("applies pulse animation to send icon when loading", () => {
   );
 
   sendIcon = screen.getByRole("button").querySelector("svg");
-  expect(sendIcon?.getAttribute("class")).toContain("text-neutral-300");
+  expect(sendIcon?.getAttribute("class")).toContain("text-muted-foreground/40");
 });
 
 test("textarea has correct styling classes", () => {

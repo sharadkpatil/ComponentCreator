@@ -103,7 +103,7 @@ export function PreviewFrame() {
       return (
         <div className="h-full flex items-center justify-center p-8 bg-background">
           <div className="text-center max-w-md">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4 animate-float">
               <svg
                 className="h-8 w-8 text-blue-600"
                 fill="none"

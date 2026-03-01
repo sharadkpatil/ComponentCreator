@@ -2,7 +2,7 @@
 
 import { Message } from "ai";
 import { cn } from "@/lib/utils";
-import { User, Bot, Loader2 } from "lucide-react";
+import { User, Bot } from "lucide-react";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 
 interface MessageListProps {
@@ -11,18 +11,6 @@ interface MessageListProps {
 }
 
 export function MessageList({ messages, isLoading }: MessageListProps) {
-  if (messages.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-full px-4 text-center">
-        <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-500/10 mb-4 shadow-sm">
-          <Bot className="h-7 w-7 text-blue-600" />
-        </div>
-        <p className="text-foreground font-semibold text-lg mb-2">Start a conversation to generate React components</p>
-        <p className="text-muted-foreground text-sm max-w-sm">I can help you create buttons, forms, cards, and more</p>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col h-full overflow-y-auto px-4 py-6">
       <div className="space-y-6 max-w-4xl mx-auto w-full">
@@ -30,7 +18,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
           <div
             key={message.id || message.content}
             className={cn(
-              "flex gap-4",
+              "flex gap-4 animate-in fade-in-0 slide-in-from-bottom-2 duration-200",
               message.role === "user" ? "justify-end" : "justify-start"
             )}
           >
@@ -106,9 +94,10 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                       {isLoading &&
                         message.role === "assistant" &&
                         messages.indexOf(message) === messages.length - 1 && (
-                          <div className="flex items-center gap-2 mt-3 text-muted-foreground">
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                            <span className="text-sm">Generating...</span>
+                          <div className="flex items-center gap-1 mt-3">
+                            <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-dot-bounce [animation-delay:0s]" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-dot-bounce [animation-delay:0.2s]" />
+                            <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-dot-bounce [animation-delay:0.4s]" />
                           </div>
                         )}
                     </>
@@ -121,9 +110,10 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
                   ) : isLoading &&
                     message.role === "assistant" &&
                     messages.indexOf(message) === messages.length - 1 ? (
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Loader2 className="h-3 w-3 animate-spin" />
-                      <span className="text-sm">Generating...</span>
+                    <div className="flex items-center gap-1">
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-dot-bounce [animation-delay:0s]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-dot-bounce [animation-delay:0.2s]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60 animate-dot-bounce [animation-delay:0.4s]" />
                     </div>
                   ) : null}
                 </div>

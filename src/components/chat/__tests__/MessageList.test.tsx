@@ -12,15 +12,10 @@ afterEach(() => {
   cleanup();
 });
 
-test("MessageList shows empty state when no messages", () => {
-  render(<MessageList messages={[]} />);
-
-  expect(
-    screen.getByText("Start a conversation to generate React components")
-  ).toBeDefined();
-  expect(
-    screen.getByText("I can help you create buttons, forms, cards, and more")
-  ).toBeDefined();
+test("MessageList renders no message bubbles when no messages", () => {
+  const { container } = render(<MessageList messages={[]} />);
+  // Empty list has no message bubbles (empty state is handled by ChatInterface/EmptyState)
+  expect(container.querySelectorAll(".rounded-xl")).toHaveLength(0);
 });
 
 test("MessageList renders user messages", () => {
@@ -106,9 +101,11 @@ test("MessageList shows loading state for last assistant message without content
     },
   ];
 
-  render(<MessageList messages={messages} isLoading={true} />);
+  const { container } = render(<MessageList messages={messages} isLoading={true} />);
 
-  expect(screen.getByText("Generating...")).toBeDefined();
+  // Loading state renders 3 animated dots
+  const dots = container.querySelectorAll(".animate-dot-bounce");
+  expect(dots.length).toBe(3);
 });
 
 test("MessageList doesn't show loading state for non-last messages", () => {
@@ -281,10 +278,7 @@ test("MessageList shows loading for assistant message with empty parts", () => {
     <MessageList messages={messages} isLoading={true} />
   );
 
-  // Check that exactly one "Generating..." text appears
-  const loadingText = container.querySelectorAll(".text-muted-foreground");
-  const generatingElements = Array.from(loadingText).filter(
-    (el) => el.textContent === "Generating..."
-  );
-  expect(generatingElements).toHaveLength(1);
+  // Loading state renders exactly 3 animated dots
+  const dots = container.querySelectorAll(".animate-dot-bounce");
+  expect(dots).toHaveLength(3);
 });

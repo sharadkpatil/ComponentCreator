@@ -43,13 +43,13 @@ export function CodeEditor() {
 
   if (!selectedFile) {
     return (
-      <div className="h-full flex items-center justify-center bg-gray-900">
+      <div className="h-full flex items-center justify-center bg-card">
         <div className="text-center">
-          <Code2 className="h-12 w-12 text-gray-600 mx-auto mb-3" />
-          <p className="text-sm text-gray-500">
+          <Code2 className="h-12 w-12 text-muted-foreground/40 mx-auto mb-3" />
+          <p className="text-sm text-muted-foreground">
             Select a file to edit
           </p>
-          <p className="text-xs text-gray-600 mt-1">
+          <p className="text-xs text-muted-foreground/70 mt-1">
             Choose a file from the file tree
           </p>
         </div>

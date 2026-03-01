@@ -13,7 +13,7 @@ export function MarkdownRenderer({
   className,
 }: MarkdownRendererProps) {
   return (
-    <div className={cn("prose leading-tight max-w-none", className)}>
+    <div className={cn("prose dark:prose-invert leading-tight max-w-none", className)}>
       <ReactMarkdown
         components={{
           code: ({ children, className, ...props }) => {

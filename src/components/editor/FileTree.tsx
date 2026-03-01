@@ -45,7 +45,7 @@ function FileTreeNode({ node, level }: FileTreeNodeProps) {
     <div>
       <div
         className={cn(
-          "flex items-center gap-2 px-2 py-1.5 hover:bg-gray-100 cursor-pointer text-sm transition-colors",
+          "flex items-center gap-2 px-2 py-1.5 hover:bg-muted cursor-pointer text-sm transition-colors",
           selectedFile === node.path && "bg-blue-50 text-blue-600"
         )}
         style={{ paddingLeft: `${level * 12 + 8}px` }}
@@ -54,9 +54,9 @@ function FileTreeNode({ node, level }: FileTreeNodeProps) {
         {node.type === "directory" ? (
           <>
             {isExpanded ? (
-              <ChevronDown className="h-3.5 w-3.5 shrink-0 text-gray-500" />
+              <ChevronDown className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
             ) : (
-              <ChevronRight className="h-3.5 w-3.5 shrink-0 text-gray-500" />
+              <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
             )}
             {isExpanded ? (
               <FolderOpen className="h-4 w-4 shrink-0 text-blue-500" />
@@ -67,10 +67,10 @@ function FileTreeNode({ node, level }: FileTreeNodeProps) {
         ) : (
           <>
             <div className="w-3.5" />
-            <FileCode className="h-4 w-4 shrink-0 text-gray-400" />
+            <FileCode className="h-4 w-4 shrink-0 text-muted-foreground" />
           </>
         )}
-        <span className="truncate text-gray-700">{node.name}</span>
+        <span className="truncate text-foreground">{node.name}</span>
       </div>
       {node.type === "directory" && isExpanded && children.length > 0 && (
         <div>
@@ -90,9 +90,9 @@ export function FileTree() {
   if (!rootNode || !rootNode.children || rootNode.children.size === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-full p-4 text-center">
-        <Folder className="h-12 w-12 text-gray-300 mb-3" />
-        <p className="text-sm text-gray-500">No files yet</p>
-        <p className="text-xs text-gray-400 mt-1">Files will appear here</p>
+        <Folder className="h-12 w-12 text-muted-foreground/40 mb-3" />
+        <p className="text-sm text-muted-foreground">No files yet</p>
+        <p className="text-xs text-muted-foreground/70 mt-1">Files will appear here</p>
       </div>
     );
   }

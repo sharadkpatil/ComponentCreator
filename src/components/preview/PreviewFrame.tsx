@@ -124,7 +124,7 @@ export function PreviewFrame() {
             <p className="text-sm text-muted-foreground mb-3">
               Start building React components with AI assistance
             </p>
-            <p className="text-xs text-muted-foreground/70">
+            <p className="text-sm text-muted-foreground/70">
               Ask the AI to create your first component to see it live here
             </p>
           </div>

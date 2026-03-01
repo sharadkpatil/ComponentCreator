@@ -58,7 +58,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
       </div>
 
       {error && (
-        <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
+        <div className="text-sm text-red-600 bg-red-500/10 border border-red-500/20 rounded p-2">
           {error}
         </div>
       )}
